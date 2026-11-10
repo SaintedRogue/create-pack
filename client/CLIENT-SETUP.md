@@ -69,6 +69,20 @@ include, so the **first** launch fails to connect without it.
 3. Join. If it says **"You are not white-listed on this server"**, send Mike the Java username
    from step 1.
 
+## 7. Optional: shaders and Fresh Animations
+
+The pack comes with nicer visuals already downloaded, but **switched off**, so each PC chooses.
+Both settings are saved per PC, and pack updates never change them.
+
+- **Shaders** (realistic lighting, shadows, water and sky): **Options → Video Settings → Shader Packs…**
+  → click **ComplementaryReimagined** → **Done**. To turn them off again, pick **(off)** in the same list.
+  These work well on the RTX 2080, 5060 and 4090 at 1080p. On the 2080, lower the shader's quality
+  profile if it stutters (Shader Packs → **Shader Pack Settings** → Profile → **Medium**).
+  Create's moving machines keep their fast rendering with shaders on, thanks to the **Colorwheel** mod.
+- **Fresh Animations** (mobs blink, look around and move naturally): **Options → Resource Packs…** →
+  hover **Fresh Animations** in the left list → click the **▶** arrow so it moves to the right → **Done**.
+  It's light enough to leave on everywhere.
+
 ---
 
 ### If something goes wrong
@@ -79,4 +93,4 @@ include, so the **first** launch fails to connect without it.
 | "Mod rejections" / "missing mods" when joining | The auto-update didn't run. Check step 5, then relaunch. |
 | The Updating window shows an error | Usually no internet or GitHub is down. Close it and launch again later. |
 | "Connection refused" / can't find the server | You're not on the home network, or the server is restarting (it restarts nightly around 3:30 AM and again around 4:30 AM, for a few minutes each). |
-| Game is slow | In Video Settings, lower Render Distance to 8. Leave shaders off. |
+| Game is slow | Turn shaders off (step 7), or in Video Settings lower Render Distance to 8. |

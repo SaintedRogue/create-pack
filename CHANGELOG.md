@@ -3,6 +3,59 @@
 Versioning is semver for the **pack**: patch = mod version bumps, minor = mods added,
 major = anything that can break an existing world (removing a content mod, block/item changes).
 
+## 1.1.0 (2026-11-10): Visuals (client only, off by default)
+
+Added at Mike's request after checking the PCs' GPUs (RTX 2080 / 5060 / 4090). Everything here runs
+**only on the PCs**: the server is unchanged (still 24 mod jars), and players can't get out of sync
+over it. The shader pack and resource pack are **downloaded but not switched on**; each PC turns them
+on in its own settings (CLIENT-SETUP step 7), and pack updates never change those settings.
+29 mod jars on clients now.
+
+| Added | File | Side | Source | |
+|---|---|---|---|---|
+| Colorwheel | colorwheel-neoforge-1.3.2+mc1.21.1.jar | client | Modrinth | Iris ↔ Flywheel bridge |
+| [EMF] Entity Model Features | entity_model_features-3.3.12-1.21-neoforge.jar | client | Modrinth | needed by Fresh Animations |
+| [ETF] Entity Texture Features | entity_texture_features-7.2.7-1.21-neoforge.jar | client | Modrinth | needed by EMF |
+| Complementary Reimagined (shader pack) | ComplementaryReimagined_r5.9.3.zip | client | Modrinth | in `shaderpacks/`, off by default |
+| Fresh Animations (resource pack) | FreshAnimations_v1.11.2_1.20+.zip | client | Modrinth | in `resourcepacks/`, off by default |
+
+- **Why Colorwheel:** Create 6 draws moving parts (belts, gears, trains, contraptions) through
+  Flywheel, which drops its fast path when an Iris shader pack is active. Colorwheel keeps it working.
+  Complementary Reimagined supports it officially (since r5.7), so Colorwheel-Patcher isn't needed.
+  Colorwheel also supports Sable, the physics engine Create Aeronautics uses, so it carries into Phase 3.
+  It needs Iris ≥ 1.8.0, so the pinned 1.8.12 is fine.
+- **Not taken:** MakeUp Ultra Fast (a lighter shader; every PC has a capable GPU), Distant Horizons
+  (heavy on RAM/disk, and another shader interaction to manage; revisit later), Vanillin, and
+  Iris Flywheel Compat (incompatible with Colorwheel).
+- **Version numbering:** this release takes 1.1.0, so the handoff's Phase 2 (CC: Tweaked + FTB Quests)
+  becomes **1.2.0**. Phase 3 stays 2.0.0.
+- **Tests:**
+  - `smoke-test-client.sh --visuals` turns the shader pack and resource pack on for the test client.
+    Result: PASS. Joined after 88 s and stayed connected for a 60 s soak.
+    - Complementary built its pipeline with 0 shader compile errors.
+    - Fresh Animations loaded.
+    - Client ERROR lines: still only the 2 container-environment ones (no sound device, Xaero's version check).
+  - Default run (visuals off): 2 PASS; 2 failures from the intermittent Create startup race below.
+    A third failure was the test laptop's `/tmp` running out of quota, not the pack.
+  - Server smoke test: 7/7 PASS, still 24 jars.
+- **Known harmless log noise with shaders on:** Iris warns `Failed to resolve uniform inPaleGarden /
+  inSulfurCaves / endFlash…` with stack traces. Complementary r5.9.3 supports MC up to 1.21.11 and refers to
+  biomes and effects that 1.21.1 doesn't have, and Iris just skips those uniforms.
+- **Known issue: rare Create startup race (pre-existing, also in 1.0.0).** It hit 2 of 6 boots, and
+  only when a server and a client JVM were starting at the same moment on the 8-core test laptop. It
+  never happened in 17 server-only boots, including the live server.
+  - **Server symptom:** Create 6.0.10 crashes at startup with `IndexOutOfBoundsException` in
+    `PackageStyles.getDefaultBox` ← `AllAdvancements.<clinit>` ← `Create.onRegister` (the
+    `minecraft:trigger_type` RegisterEvent). The package-item list is still empty when Create builds its
+    advancements.
+  - **Client symptom:** the client is refused with "server sent registries with unknown keys: create:clutch".
+  - **Cause:** not root-caused. The server's mod set is identical to 1.0.0, so 1.1.0 didn't introduce it.
+    No upstream report exists yet.
+  - **Recovery:** start the server again from AMP, or relaunch the game. Evidence logs were saved at the time.
+- **Test-harness note:** llvmpipe advertises only OpenGL 4.5, but Colorwheel compiles GLSL 4.60 shaders,
+  which RTX cards support. So `--visuals` runs set `MESA_GL_VERSION_OVERRIDE=4.6` /
+  `MESA_GLSL_VERSION_OVERRIDE=460`.
+
 ## 1.0.0 (2026-11-09): Phase 1, core engineering
 
 Minecraft **1.21.1**, NeoForge **21.1.265**, Java 21. 25 mods + 3 libraries + the packwiz bootstrap

@@ -28,7 +28,7 @@ clients can't get ahead of the server.
 
 | Path | What |
 |---|---|
-| `pack/` | packwiz root: `pack.toml`, `index.toml`, `mods/*.pw.toml`, curated `config/` |
+| `pack/` | packwiz root: `pack.toml`, `index.toml`, `mods/*.pw.toml`, `shaderpacks/`, `resourcepacks/`, curated `config/` |
 | `server/sync-server.sh` | sync the AMP instance to the published pack (idempotent) |
 | `server/amp_api.py` | tiny AMP API client used by the sync script (status/stop/start/settings/console) |
 | `server/amp-settings.json` | gameplay settings applied as AMP settings (replaces a `server.properties` template) |
@@ -54,6 +54,7 @@ clients can't get ahead of the server.
    Pick the exact version, then add it by its version page URL so packwiz can't pick a beta:
    `cd pack && packwiz modrinth add https://modrinth.com/mod/<slug>/version/<id> -y`
 2. Check `side` in `mods/<slug>.pw.toml` (`client` for rendering/UI-only mods, `server` for admin tools).
+   Shader packs and resource packs get `side = "both"` from packwiz (Modrinth doesn't tag them); set them to `client`.
 3. `packwiz refresh`, then run **both** smoke tests (below).
 4. Bump `version` in `pack/pack.toml` (**minor** for added mods), add a CHANGELOG entry, commit.
 

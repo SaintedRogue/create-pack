@@ -98,6 +98,13 @@ while it runs. `chunky progress` shows how far it is.
 Done on the live server on 2026-11-10, right after the EULA was accepted. The first boot took 6.4 s, and
 the log has only the two known upstream errors from the CHANGELOG (277 Steam 'n' Rails loot tables + 1 Create Deco recipe).
 
+## If the server shows "Failed" after a restart
+
+Create 6.0.10 has a rare startup race. In testing it happened only under heavy CPU load, and never in
+17 plain server boots. When it hits, the log ends with `IndexOutOfBoundsException ... PackageStyles.getDefaultBox`.
+Nothing is damaged, because it fails before the world loads. Press **Start** in AMP, or run
+`server/amp_api.py start CreateMC01`. See CHANGELOG 1.1.0 "Known issue".
+
 ## Whitelist
 
 Players are turned away until whitelisted. When a kid first tries to join, the console shows
