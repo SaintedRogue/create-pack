@@ -47,6 +47,12 @@ Minecraft **1.21.1**, NeoForge **21.1.265**, Java 21. 25 mods + 3 libraries + th
 - `config/simplebackups-common.toml`: `backupsToKeep = 24` (every 2 h while players are online,
   compressed: already defaults); `mc2discord = false`.
 - Create: untouched (contraption limits checked: 2048 blocks moved, 64 piston poles, 384 rope).
+- Xaero's: minimap and radar are **on by default** already (`display_minimap`/`display_radar`).
+  **Not shipped: "radar shows animals only."** Xaero 26.x keeps radar categories in both
+  `default_radar_categories_client.json` and `..._server.json` and has an enforced server-profile
+  system. I couldn't confirm which file a player's live radar reads (vs. one Xaero regenerates),
+  so it's left at Xaero's defaults instead of shipping a config that might be silently ignored.
+  Per PC: Minimap settings → Entity Radar → turn off Hostile / Items / Other.
 
 ### Skipped
 - Nothing from the Phase 1 list. Every mod has a NeoForge 1.21.1 build.

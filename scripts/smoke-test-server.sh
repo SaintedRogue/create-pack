@@ -78,7 +78,6 @@ ELAPSED=$(( $(date +%s) - START ))
 docker logs "$NAME" >"$WORK/server.log" 2>&1 || true
 [[ $KEEP -eq 1 ]] && cp "$WORK/server.log" "$DATA/smoke-server.log"
 MOD_COUNT=$(find "$DATA/mods" -maxdepth 1 -name '*.jar' 2>/dev/null | wc -l)
-LOADED=$(grep -oE 'Loading [0-9]+ mods' "$WORK/server.log" | tail -1 || true)
 
 if [[ "$result" == "PASS" ]]; then
   # Stop cleanly so world save/shutdown hooks run too.
@@ -89,7 +88,7 @@ if [[ "$result" == "PASS" ]]; then
 fi
 
 echo "result:      $result"
-echo "mods jars:   $MOD_COUNT  (${LOADED:-loader line not found})"
+echo "mod jars:    $MOD_COUNT (server side only; client-only mods are skipped)"
 echo "boot time:   ${ELAPSED}s (includes NeoForge install + mod downloads on a fresh data dir)"
 if [[ "$result" != "PASS" ]]; then
   echo "--- matching failure lines ---"; grep -nE "$FAIL_RE|ERROR|Exception" "$WORK/server.log" | head -40 || true

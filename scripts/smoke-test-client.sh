@@ -73,6 +73,9 @@ docker run -d --init --name "$TAG-client" --network host -e LIBGL_ALWAYS_SOFTWAR
     java -jar packwiz-installer-bootstrap.jar -g -s client http://127.0.0.1:$WEB_PORT/pack.toml
     echo '== waiting for server port'
     for i in \$(seq 1 300); do (exec 3<>/dev/tcp/127.0.0.1/$GAME_PORT) 2>/dev/null && break; sleep 2; done
+    # A fresh options.txt makes vanilla show the first-launch accessibility screen, which waits
+    # for a click and swallows --quickPlayMultiplayer. Pre-dismiss it (and the multiplayer warning).
+    [ -e options.txt ] || printf 'onboardAccessibility:false\nskipMultiplayerWarning:true\njoinedFirstServer:true\n' > options.txt
     echo '== starting Xvfb :$DISPLAY_NUM'
     Xvfb :$DISPLAY_NUM -screen 0 1280x720x24 -nolisten tcp >/work/xvfb.log 2>&1 &
     export DISPLAY=:$DISPLAY_NUM
