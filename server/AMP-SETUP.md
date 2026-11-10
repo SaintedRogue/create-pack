@@ -86,11 +86,17 @@ From the AMP console (or `server/amp_api.py console CreateMC01 "<command>"`):
 ```
 gamerule keepInventory true
 gamerule playersSleepingPercentage 1
+chunky world minecraft:overworld
+chunky spawn
 chunky radius 2000
 chunky start
 ```
-Chunky pre-generates a 4000×4000-block area (about 15-30 minutes; players can be on while it runs).
-`chunky progress` shows how far it is.
+Chunky pre-generates a 4000×4000-block area centred on world spawn (`chunky spawn`, otherwise it
+centres on 0,0). On this host it ran at about 150 chunks/s, so roughly 7 minutes; players can be on
+while it runs. `chunky progress` shows how far it is.
+
+Done on the live server on 2026-11-10, right after the EULA was accepted. The first boot took 6.4 s, and
+the log has only the two known upstream errors from the CHANGELOG (277 Steam 'n' Rails loot tables + 1 Create Deco recipe).
 
 ## Whitelist
 
