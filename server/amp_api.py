@@ -109,6 +109,9 @@ class Instance:
                 last = st
             if st in done:
                 return st
+            if st == 80:  # AwaitingUserInput: on a fresh instance this is AMP's Minecraft EULA prompt
+                raise SystemExit(f"{self.name} is waiting for input in the AMP panel. On a first start this is "
+                                 f"the Minecraft EULA prompt: open {AMP_URL}, accept it, then rerun.")
             if st in fail:
                 raise SystemExit(f"{self.name} entered {STATES.get(st, st)}")
             time.sleep(2)

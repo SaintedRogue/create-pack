@@ -59,6 +59,13 @@ AMP keeps 28 backups (20 GB cap) in the instance's `Backups/` folder. Recreate i
 On top of that, the **Simple Backups** mod saves the world every 2 hours while anyone is online,
 keeping 24, in `Minecraft/simplebackups/`.
 
+## First start: accept the Minecraft EULA
+
+On a brand-new instance, AMP pauses the first start in **"Awaiting user input"** until someone
+accepts Mojang's EULA in the panel. Open the instance in AMP, accept the prompt, and it starts.
+That's a one-time legal acceptance by the server owner, so the scripts deliberately don't click it:
+`sync-server.sh` stops with a message telling you to do it.
+
 ## One-time steps after the first boot
 
 From the AMP console (or `server/amp_api.py console CreateMC01 "<command>"`):
