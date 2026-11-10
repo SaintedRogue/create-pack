@@ -1,0 +1,13 @@
+name = "Ahrendt Engineering"
+author = "Mike"
+version = "1.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "a0c6b9dbaa2203b8f3209919b3a3c048f6346f9ac61da22e76e0b406c0816c72"
+
+[versions]
+minecraft = "1.21.1"
+neoforge = "21.1.265"

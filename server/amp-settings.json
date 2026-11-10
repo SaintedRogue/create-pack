@@ -1,0 +1,20 @@
+{
+  "_comment": "AMP owns these server.properties keys and rewrites the file on every start, so they are applied as AMP settings (server/amp_api.py settings ...) instead of a server.properties template. Applied on the first sync only; re-apply with sync-server.sh --reapply-settings. SleepMode must stay False: AMP sleep stops the whole server when nobody is online, which would halt FTB Chunks force-loaded factories.",
+  "MinecraftModule.Minecraft.ServerMOTD": "Ahrendt Engineering",
+  "MinecraftModule.Minecraft.PortNumber": "25570",
+  "MinecraftModule.Minecraft.ViewDistance": "10",
+  "MinecraftModule.Minecraft.SimulationDistance": "8",
+  "MinecraftModule.Minecraft.WorldSeed": "",
+  "MinecraftModule.Game.Difficulty": "2",
+  "MinecraftModule.Game.GameMode": "survival",
+  "MinecraftModule.Game.EnablePVPCombat": "False",
+  "MinecraftModule.Game.Whitelist": "True",
+  "MinecraftModule.Game.EnforceWhitelist": "True",
+  "MinecraftModule.Game.SpawnProtectionRadius": "0",
+  "MinecraftModule.Game.AllowFlight": "True",
+  "MinecraftModule.Limits.MaxPlayers": "10",
+  "MinecraftModule.Limits.SleepMode": "False",
+  "MinecraftModule.Java.JavaVersion": "/usr/lib/jvm/temurin-21-jdk-amd64/bin/java",
+  "MinecraftModule.Java.MaxHeapSizeMB": "8192",
+  "MinecraftModule.Java.MinHeapSizeMB": "8192"
+}

@@ -1,0 +1,9 @@
+# Exported packs embed CurseForge jars (FTB mods are not openly licensed) - never commit or publish them.
+dist/
+*.mrpack
+# packwiz-installer state if anyone runs it against the repo by mistake
+packwiz.json
+packwiz-installer*.jar
+
+# Python bytecode
+__pycache__/
