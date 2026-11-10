@@ -50,20 +50,33 @@ settings, not a properties template. Source of truth: [`amp-settings.json`](amp-
 
 ## Schedule (Configuration → Schedule)
 
-One trigger, **"create-pack: nightly backup + restart (04:30)"**, runs AMP's *Take Backup* with
+One trigger, **"create-pack: nightly backup + restart (03:30)"**, runs AMP's *Take Backup* with
 *Back up while running* **off**. AMP stops the server, backs up the world while it's stopped
 (so the backup is consistent), and starts it again, which doubles as the daily restart.
 AMP keeps 28 backups (20 GB cap) in the instance's `Backups/` folder. Recreate it with
 `server/amp_api.py schedule CreateMC01`.
+
+**Why 03:30, not 04:30:** Unraid's *Appdata Backup* plugin stops **every** container at
+04:30 Eastern (01:30 on the Unraid clock, which is on Pacific time), AMP included. The original
+04:30 job collided with it and was killed 14 seconds into the backup. So both servers also
+restart once more around 04:30-04:40, and they come back on their own because
+**start-on-boot is on** for both `CreateMC01` and `KidsMC01` (`server/amp_api.py autostart <instance> on`).
+Without it, every instance stays offline after that nightly container restart.
 
 On top of that, the **Simple Backups** mod saves the world every 2 hours while anyone is online,
 keeping 24, in `Minecraft/simplebackups/`.
 
 ## First start: accept the Minecraft EULA
 
-On a brand-new instance, AMP pauses the first start in **"Awaiting user input"** until someone
-accepts Mojang's EULA in the panel. Open the instance in AMP, accept the prompt, and it starts.
-That's a one-time legal acceptance by the server owner, so the scripts deliberately don't click it:
+AMP only asks for the EULA **when the server is starting**, so there's nothing to find while it's
+stopped ("Application Idle"). To get the prompt:
+
+1. **Instances** → on the **CreateMC01** card, click the green **Manage** button (cube icon, far right).
+2. On the instance's **Status** page, click **Start**.
+3. AMP pops up a question asking you to accept the Minecraft EULA. Accept it.
+
+The server then installs its first-run files and boots (NeoForge with this pack takes about 1-2 minutes).
+This is a one-time legal acceptance by the server owner, so the scripts deliberately don't do it:
 `sync-server.sh` stops with a message telling you to do it.
 
 ## One-time steps after the first boot
@@ -96,5 +109,5 @@ Op isn't needed for anyone: the AMP console already has full control.
 3. **Configuration → Java**: Java *Temurin 21*, memory 8192/8192.
 4. Game, Limits and Network settings from the table above (game port is under the instance's
    *Network* settings and can only be changed while the instance is stopped).
-5. **Schedule**: add the 04:30 trigger with *Take Backup* (Local ✓, Back up while running ✗).
+5. **Schedule**: add the 03:30 trigger with *Take Backup* (Local ✓, Back up while running ✗).
 6. Run `server/sync-server.sh` to install the mods, then do the one-time console steps.

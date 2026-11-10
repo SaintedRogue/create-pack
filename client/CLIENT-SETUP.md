@@ -78,5 +78,5 @@ include, so the **first** launch fails to connect without it.
 | "Multiplayer is disabled…" | Step 2 (child account setting). |
 | "Mod rejections" / "missing mods" when joining | The auto-update didn't run. Check step 5, then relaunch. |
 | The Updating window shows an error | Usually no internet or GitHub is down. Close it and launch again later. |
-| "Connection refused" / can't find the server | You're not on the home network, or the server is restarting (it restarts daily at 4:30 AM). |
+| "Connection refused" / can't find the server | You're not on the home network, or the server is restarting (it restarts nightly around 3:30 AM and again around 4:30 AM, for a few minutes each). |
 | Game is slow | In Video Settings, lower Render Distance to 8. Leave shaders off. |

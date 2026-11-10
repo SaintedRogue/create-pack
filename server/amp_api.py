@@ -17,7 +17,7 @@ Subcommands (all take the instance name):
   create   <instance> <friendly> <amp-web-port>  create a new Minecraft instance (one-time). The port
                                       is the instance's own AMP management port (KidsMC01 uses 8081),
                                       NOT the game port — that comes from amp-settings.json.
-  schedule <instance>                 ensure the nightly 04:30 stop->backup->start job (idempotent)
+  schedule <instance>                 ensure the nightly 03:30 stop->backup->start job (idempotent)
   console  <instance> <command>       send a console command (e.g. "chunky start")
 """
 import json, os, subprocess, sys, time, urllib.request, uuid
@@ -230,13 +230,21 @@ def main(argv):
         inst.set("Core.AMP.AppStartupMode", "2" if on else "0")  # enum: 0 Do Nothing, 2 Start
         print(f"{name}: autostart {'on' if on else 'off'} ({r})")
     elif cmd == "schedule":
-        # Nightly 04:30 (container TZ, America/Detroit): stop -> backup -> start. The stop/start
-        # doubles as the daily restart. Idempotent: matched by description.
-        desc = "create-pack: nightly backup + restart (04:30)"
+        # Nightly 03:30 (container TZ, America/Detroit): stop -> backup -> start. Unraid's Appdata
+        # Backup plugin stops EVERY container at 04:30 Eastern (01:30 on the Pacific-time host), so
+        # this must finish well before then; it was 04:30 and got killed 14 s into the backup.
+        # Idempotent: matched by description; triggers from older versions of this job are removed.
+        prefix = "create-pack: nightly backup + restart"
+        desc = f"{prefix} (03:30)"
+        sd = inst.api("Core/GetScheduleData")
+        for old in [t for t in sd.get("PopulatedTriggers", [])
+                    if t.get("Description", "").startswith(prefix) and t.get("Description") != desc]:
+            inst.api("Core/DeleteTrigger", Id=old["Id"])
+            print(f"{name}: removed old trigger '{old['Description']}'")
         sd = inst.api("Core/GetScheduleData")
         trig = next((t for t in sd.get("PopulatedTriggers", []) if t.get("Description") == desc), None)
         if not trig:
-            inst.api("Core/AddIntervalTrigger", months=list(range(1, 13)), days=list(range(0, 7)), hours=[4],
+            inst.api("Core/AddIntervalTrigger", months=list(range(1, 13)), days=list(range(0, 7)), hours=[3],
                      minutes=[30], daysOfMonth=list(range(1, 32)), description=desc)
             sd = inst.api("Core/GetScheduleData")
             trig = next(t for t in sd["PopulatedTriggers"] if t.get("Description") == desc)
