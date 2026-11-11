@@ -83,6 +83,22 @@ Both settings are saved per PC, and pack updates never change them.
   hover **Fresh Animations** in the left list → click the **▶** arrow so it moves to the right → **Done**.
   It's light enough to leave on everywhere.
 
+## 8. Optional: playing with a controller
+
+The pack includes **Controlify**, so Xbox, PlayStation, Switch Pro and most other controllers work
+with no extra software. It does nothing until a controller is connected, so keyboard-and-mouse
+PCs aren't affected.
+
+1. Plug the controller in, or pair it over Bluetooth, before or after launching. The game shows
+   **"Controller Connected"** and switches to it. To go back to keyboard and mouse, unplug the
+   controller, or pick **Keyboard & Mouse** at the top of Controller Settings (step 3).
+2. Button hints appear on screen. Menus and inventories work with the controller: the cursor
+   snaps to inventory slots.
+3. To change sensitivity, remap buttons or turn vibration off: **Options → Controls →
+   Controller Settings…**
+4. On joining the server you may see a **"New server detected"** message. Ignore it: our server
+   allows smooth stick movement.
+
 ---
 
 ### If something goes wrong
@@ -94,3 +110,4 @@ Both settings are saved per PC, and pack updates never change them.
 | The Updating window shows an error | Usually no internet or GitHub is down. Close it and launch again later. |
 | "Connection refused" / can't find the server | You're not on the home network, or the server is restarting (it restarts nightly around 3:30 AM and again around 4:30 AM, for a few minutes each). |
 | Game is slow | Turn shaders off (step 7), or in Video Settings lower Render Distance to 8. |
+| Controller does nothing, or moves the mouse pointer instead | Close **Steam** and **DS4Windows** if they're running. Both can take over the controller (DS4Windows also adds a second, fake Xbox controller). Then unplug and replug it. |

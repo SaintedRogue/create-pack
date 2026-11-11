@@ -3,6 +3,39 @@
 Versioning is semver for the **pack**: patch = mod version bumps, minor = mods added,
 major = anything that can break an existing world (removing a content mod, block/item changes).
 
+## 1.2.0 (2026-11-11): Controller support (client only)
+
+Added at Mike's request so Java Edition can be played with a controller. It runs **only on the
+PCs**: the server is unchanged (still 24 mod jars). 31 mod jars on clients now.
+
+| Added | Version | Why |
+|---|---|---|
+| Controlify | 3.0.1+lts (Modrinth `RqsNKKLK`) | Controller support built on SDL3: Xbox, PlayStation (no DS4Windows needed), Switch Pro, Steam Deck and more. Full menu and inventory navigation with slot snapping, on-screen button hints, vibration, gyro aiming, radial menu. |
+| YetAnotherConfigLib (YACL) | 3.8.2+1.21.1-neoforge | Required by Controlify for its settings screens. Controlify also bundles 3.8.0; the newer one wins. |
+
+- **Why Controlify:** it's the most complete controller mod for Java Edition and has a full release
+  for NeoForge 1.21.1. MrCrayfish's Controllable isn't on Modrinth. Steam Input or AntiMicroX
+  key-mapping needs no mod but has no button hints or proper menu navigation.
+- **Both set to `side = "client"`:** Modrinth tags Controlify "client required, server optional".
+  The server half only lets a server *restrict* things like reach-around placement or force
+  keyboard-like movement, so there's no reason to put it on ours. Analogue stick movement works on
+  servers without it.
+- **Inert without a controller:** it logs "No controllers found" and changes nothing. The SDL3
+  natives ship inside the jar (Windows, Linux, macOS), so there's no download prompt on first launch.
+- **Players:** CLIENT-SETUP step 8, plus a troubleshooting row about Steam and DS4Windows grabbing
+  the controller.
+- **Version numbering:** this release takes 1.2.0 (minor = mods added), so Phase 2
+  (CC: Tweaked + FTB Quests) becomes **1.3.0**. Phase 3 stays 2.0.0.
+- **Tests:**
+  - `smoke-test-client.sh`: 2/2 PASS (joined after 84 s and 80 s, 45 s soak each).
+  - Kept log: Controlify initialised, loaded its bundled SDL 3.2.18 natives and 398 gamepad
+    mappings, then found no controllers (expected in the container).
+  - Controlify's two ERROR-level lines are harmless:
+    - a mixin `@Shadow` remap notice for `AbstractRecipeBookScreenMixin`;
+    - `SteamDeckUtil` saying it skipped Steam Deck checks.
+  - `smoke-test-server.sh`: PASS, still 24 jars, so the server needs no sync for this release.
+  - Real controller input can't be exercised in the container; that gets checked on Mike's PC.
+
 ## 1.1.0 (2026-11-10): Visuals (client only, off by default)
 
 Added at Mike's request after checking the PCs' GPUs (RTX 2080 / 5060 / 4090). Everything here runs
@@ -28,7 +61,7 @@ on in its own settings (CLIENT-SETUP step 7), and pack updates never change thos
   (heavy on RAM/disk, and another shader interaction to manage; revisit later), Vanillin, and
   Iris Flywheel Compat (incompatible with Colorwheel).
 - **Version numbering:** this release takes 1.1.0, so the handoff's Phase 2 (CC: Tweaked + FTB Quests)
-  becomes **1.2.0**. Phase 3 stays 2.0.0.
+  becomes 1.2.0 (later 1.3.0, see 1.2.0 above). Phase 3 stays 2.0.0.
 - **Tests:**
   - `smoke-test-client.sh --visuals` turns the shader pack and resource pack on for the test client.
     Result: PASS. Joined after 88 s and stayed connected for a 60 s soak.
