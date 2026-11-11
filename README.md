@@ -77,7 +77,7 @@ Acceptance for any release: both pass, `packwiz refresh` leaves no diff, the `.m
 ```sh
 git tag -a v1.2.3 -m "v1.2.3"
 git push origin main v1.2.3
-git push origin v1.2.3:release            # clients pick this up on their next launch
+git push origin 'v1.2.3^{commit}:release' # clients pick this up on their next launch (^{commit}: a branch can't point at an annotated tag)
 server/sync-server.sh                     # stop → install → start the AMP server
 scripts/export-mrpack.sh                  # writes dist/*-public.mrpack (+ private full pack)
 gh release create v1.2.3 --title v1.2.3 --notes-file <(sed -n '/^## 1.2.3/,/^## [0-9]/p' CHANGELOG.md | sed '$d') \
@@ -88,7 +88,7 @@ Do the `release` push and the server sync back to back. Between them the server 
 so anyone launching in that window can't connect until the sync finishes.
 
 ### Roll back
-1. `git push --force origin v1.2.2:release`, which points `release` at the previous good tag.
+1. `git push --force origin 'v1.2.2^{commit}:release'`, which points `release` at the previous good tag.
 2. `server/sync-server.sh`. packwiz-installer removes files the older pack doesn't list.
 3. If the bad version **added content mods** and anyone played on it, the world may hold
    blocks the old pack doesn't know. Restore the world from the backup taken before the update
