@@ -109,10 +109,14 @@ docker run -d --init --name "$TAG-client" --network host "${GL_ENV[@]}" \
   " >/dev/null
 
 FAIL_RE='Missing or unsupported mandatory dependencies|Mixin apply failed|MixinApplyError|MixinTransformerError|Failed to create mod instance|ModLoadingException|Crash report saved|This crash report has been saved|Game crashed|Mismatched mod channel|Incompatible client|Disconnected from server|lost connection|Failed to load options'
+# Lines that contain a FAIL_RE phrase but are routine. FallingTree logs
+# "Disconnected from server, resetting proxy config values" from its logout hook while the client
+# is still connecting; it is not a disconnect. Keep this list exact-phrase and short.
+BENIGN_RE='resetting proxy config values'
 result="TIMEOUT"; joined_at=0
 while (( $(date +%s) - START < TIMEOUT )); do
   slog="$(docker logs "$TAG-server" 2>&1 || true)"; clog="$(docker logs "$TAG-client" 2>&1 || true)"
-  if grep -qE "$FAIL_RE" <<<"$slog$clog" \
+  if grep -vE "$BENIGN_RE" <<<"$slog$clog" | grep -qE "$FAIL_RE" \
      || compgen -G "$WORK/server/crash-reports/*" >/dev/null || compgen -G "$WORK/client/mc/crash-reports/*" >/dev/null; then
     result="FAIL"; break
   fi
@@ -141,7 +145,7 @@ if [[ $VISUALS -eq 1 ]]; then
   echo "shader compiler errors: $(grep -c 'source=SHADER COMPILER, type=ERROR' "$WORK/client/mc/logs/latest.log" 2>/dev/null || true)"
 fi
 if [[ "$result" != "PASS" ]]; then
-  echo "--- failure lines ---"; grep -nhE "$FAIL_RE" "$WORK/server.log" "$WORK/client.log" "$WORK/client/mc/logs/latest.log" 2>/dev/null | head -30 || true
+  echo "--- failure lines ---"; grep -nhE "$FAIL_RE" "$WORK/server.log" "$WORK/client.log" "$WORK/client/mc/logs/latest.log" 2>/dev/null | grep -vE "$BENIGN_RE" | head -30 || true
   echo "--- client log tail ---"; tail -40 "$WORK/client.log"
   for f in "$WORK"/server/crash-reports/* "$WORK"/client/mc/crash-reports/*; do [[ -e "$f" ]] && { echo "--- $f"; head -50 "$f"; }; done
   exit 1

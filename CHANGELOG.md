@@ -3,6 +3,124 @@
 Versioning is semver for the **pack**: patch = mod version bumps, minor = mods added,
 major = anything that can break an existing world (removing a content mod, block/item changes).
 
+## 1.3.0 (2026-11-14): Adventure update
+
+Picked by Mike with the boys: new weapons and combat, bosses to use them on, and a round of
+quality-of-life mods, plus Figura avatars. 37 jars added: 22 chosen mods + 15 libraries. The
+server goes from 24 to 52 jars. This is a **content** release: once it's live, removing any of these deletes their items
+and blocks from the world.
+
+**Weapons and adventure**
+
+| Added | Version (Modrinth id) | What it's for |
+|---|---|---|
+| Simply Swords | 1.70.2-1.21.1 (`nS0Yahr5`) | ~15 weapon types in every tier; unique legendary weapons in loot chests |
+| Better Combat | 2.4.0+1.21.1-neoforge (`VhIOvcXP`) | Combo swings, sweeping hits, two-handers, dual wielding |
+| Sophisticated Backpacks | 1.21.1-3.26.21.2249 (`tJnK2DE1`) | Upgradeable backpacks (pickup, magnet, crafting) |
+| Waystones | 21.1.46+neoforge-1.21.1 (`6Z6MQ6os`) | Teleport network between base, farms, arena and range |
+| MmmMmmMmmMmm | 1.21-2.1.2 (`DldwQTMc`) | Target dummies showing damage numbers |
+| L_Ender's Cataclysm | 3.33 (`PsPYpoCC`) | Boss dungeons with unique weapon drops |
+| Artifacts | 13.2.5 (`lMfuK0o7`) | Findable trinkets (running shoes, lucky scarf…) |
+| Create: Connected | 1.3.3-mc1.21.1 (`Xe7EqzfQ`) | Extra Create blocks (from the 2026-11-10 research) |
+| Create: Enchantment Industry | 2.4.2 (`qUpvzZ83`) | Automated enchanting with Create (from the 2026-11-10 research) |
+
+**Quality of life**
+
+| Added | Version (Modrinth id) | Side |
+|---|---|---|
+| Mouse Tweaks | 1.21-2.26.1-neoforge (`9I21YYxf`) | client |
+| Inventory Profiles Next | neoforge-1.21.1-2.2.5 (`vjuNnHLv`) | client |
+| Shulker Box Tooltip | 5.1.9+1.21.1-neoforge (`IuqNIoAi`) | both |
+| FallingTree | 1.21.1-1.21.1.11 (`wxGXaJMA`) | both |
+| TorchMaster | 21.1.13-release (`JmlakQNo`) | both |
+| Polymorph | 1.1.0+1.21.1 (`VEburL70`) | both |
+| Nature's Compass | 1.21.1-3.4.0-neoforge (`nFniEtJV`) | both |
+| Explorer's Compass | 1.21.1-3.4.0-neoforge (`hIJ2Ev1Q`) | both |
+| Just Enough Resources | 1.6.0.57 (`A2G7NFcD`) | client |
+| Enchantment Descriptions | 21.1.11 (`IktklYWh`) | both |
+| Sodium Dynamic Lights | neoforge-1.21.1-1.0.10 (`XI0WLXdn`) | client |
+| Tom's Simple Storage | 1.21-2.4.2 (`WQAMoIMC`) | both |
+| Figura | 0.1.6+1.21.1 (`AvgeQoZm`) | client |
+
+- **Figura:** custom 3D player avatars, made in Blockbench or picked from ready-made ones.
+  - Avatars upload to Figura's own cloud backend; that's how other players get them. Only players
+    who also run Figura see them, which here means just the family on the whitelisted server.
+  - Avatar Lua scripts run sandboxed, and each player sets per-player permission levels for what
+    other avatars may do on their screen.
+  - Client-only (Modrinth: server unsupported), no dependencies.
+
+**Libraries:**
+
+| Library | Version (Modrinth id) |
+|---|---|
+| Simply Tooltips | 0.1.5 (`Zb6dytvm`), client |
+| Fzzy Config | 0.7.7+fix1+1.21+neoforge (`jRuOkBAG`) |
+| playerAnimator | 2.0.4+1.21.1-forge (`HJZB6bmA`) |
+| Cloth Config | 15.0.140+neoforge (`izKINKFg`) |
+| Sophisticated Core | 1.21.1-1.5.35.2473 (`FilyXPLY`) |
+| Balm | 21.0.67+neoforge-1.21.1 (`gMedgtzL`) |
+| Moonlight | 1.21.1-3.8.3 (`yBea1yLM`) |
+| Lionfish API | 3.1 (`fTRMVgyZ`) |
+| Curios | 9.5.1+1.21.1 (`yohfFbgD`) |
+| Create: Dragons Plus | 1.11.9 (`b0u9vk8C`) |
+| libIPN | neoforge-1.21.1-6.6.3 (`BGe4KMlE`), client |
+| Bookshelf | 21.1.81 (`1sdJl7J1`) |
+| Prickle | 21.1.11 (`EE1FHDyD`) |
+| Sodium Options API | neoforge-1.21.1-1.0.10 (`lrsX3TMS`), client |
+| Reese's Sodium Options | 1.8.3+mc1.21.4 (`xAiCe6w8`), client |
+
+- **Hidden dependency: Reese's Sodium Options.** Sodium Options API (needed by Sodium Dynamic
+  Lights) requires `reeses_sodium_options` in its mods.toml, but Modrinth doesn't list it, so
+  packwiz didn't add it. The first client smoke test failed on "Missing or unsupported mandatory
+  dependencies".
+  - RSO 2.2.x pins Sodium `[0.8.13]` / `[0.8.12,)`. We stay on Sodium 0.6.13 until Iris has a
+    release for 0.8.
+  - 1.8.3 declares `sodium [0.6.5,)` and is Modrinth-tagged for 1.21–1.21.5, so it fits.
+  - **When Sodium is bumped to 0.8,** move RSO to 2.2.x in the same change.
+
+- **Beta exception: playerAnimator.** Better Combat requires it, and it has never had a
+  release-tagged build for 1.21.1 (only 2.0.0, 2.0.1 and 2.0.4, all "beta"). Every Better Combat
+  1.21.1 install uses one of these. This is the only non-release jar in the pack.
+- **Sides:** packwiz took them from Modrinth's tags. Nine jars are client-only: Mouse Tweaks,
+  IPN + libIPN, JER, Sodium Dynamic Lights + Sodium Options API + RSO, Figura and Simply Tooltips. Simply
+  Swords lists Simply Tooltips as required, but the server boots fine without it.
+- **Config, `config/fallingtree.json`:** `includePersistentLeavesInRequiredCount` is set to
+  `false`. Upstream counts *player-placed* leaves toward the "is this a tree?" check, so one axe
+  swing could fell a log build with hedge or azalea decoration. Only natural leaves count now.
+  Every other value is the mod's generated default. Sneaking still chops a single log.
+- **Left at defaults, on purpose:**
+  - **Cataclysm:** most bosses have `ignore_mobgriefing = true` and can break blocks (Ender
+    Guardian: a 15×2×15 area). That's by design inside their own dungeons, far from builds. If
+    Cataclysm bosses are ever added to the arena, check this first: reinforced deepslate has a
+    finite hardness, so these bosses may be able to break it.
+  - **TorchMaster:** mega torch radius 64. It only blocks *natural* spawns, so the blaze-farm
+    spawner, villager golem summons and the arena's summoned mobs are unaffected.
+- **New structures** (Cataclysm dungeons, Waystone villages, Artifacts campsites) only generate
+  in chunks that haven't been generated yet. The Chunky pregen covers radius 2000 around spawn,
+  so they start appearing beyond that.
+- **Version numbering:** this content release takes 1.3.0. Phase 2 (CC: Tweaked + FTB Quests)
+  moves to **1.4.0**. Phase 3 stays 2.0.0.
+- **Test script fix, `smoke-test-client.sh`:** FallingTree logs "Disconnected from server,
+  resetting proxy config values" from its logout hook while the client is still connecting. That
+  matched the script's `Disconnected from server` failure pattern and aborted runs mid-join
+  (false FAIL at 97 s). There's now a short exact-phrase `BENIGN_RE` filter, so real disconnects
+  still fail.
+- **Tests:**
+  - `smoke-test-server.sh`: PASS, 52 jars, 43 s boot on a fresh data dir (run before and after
+    the FallingTree config).
+  - `smoke-test-client.sh`: 2/2 PASS with 68 client jars (joined after 90 s and 186 s, 45 s soak
+    each). Two earlier runs failed: one on the missing RSO, one on the FallingTree false positive.
+    Both are fixed above.
+  - `packwiz refresh` is a no-op, and both `.mrpack`s export.
+  - Startup ERRORs from the new mods are harmless upstream noise, the same class as the Railways
+    track entries:
+    - Loot tables for items that aren't registered: 6 for CEI's unreleased gem cutter, infuser
+      etc., and 16 for Create: Connected's dye-mod compat items.
+    - Create: Dragons Plus data-map WARNs.
+  - Not covered by the container tests:
+    - Better Combat with a real controller (Controlify). Check on Mike's PC.
+    - Figura avatar upload and download (needs a real Microsoft account).
+
 ## 1.2.0 (2026-11-11): Controller support (client only)
 
 Added at Mike's request so Java Edition can be played with a controller. It runs **only on the

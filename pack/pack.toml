@@ -1,12 +1,12 @@
 name = "Ahrendt Engineering"
 author = "Mike"
-version = "1.2.0"
+version = "1.3.0"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "fabc308d8f710f4963eb53e86d20c0a5fc26a6827dce622c9475891b86659f5c"
+hash = "a0f4770e7b57c09fe586965561a0c30cff9fa3c1b3b96770403db5d5a145a6f1"
 
 [versions]
 minecraft = "1.21.1"
