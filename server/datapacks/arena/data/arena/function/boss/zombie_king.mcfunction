@@ -1,0 +1,5 @@
+summon zombie 622 66 140 {Tags:["arena_mob","arena_new","zking"],PersistenceRequired:1b,CanBreakDoors:0b,CustomName:'{"text":"Zombie King","color":"dark_red","bold":true}',CustomNameVisible:1b,Health:150f,attributes:[{id:"minecraft:generic.max_health",base:150d},{id:"minecraft:generic.scale",base:2d},{id:"minecraft:generic.attack_damage",base:9d},{id:"minecraft:generic.knockback_resistance",base:0.8d}],ArmorItems:[{id:"minecraft:diamond_boots",count:1},{id:"minecraft:diamond_leggings",count:1},{id:"minecraft:diamond_chestplate",count:1},{id:"minecraft:golden_helmet",count:1}],HandItems:[{id:"minecraft:diamond_sword",count:1},{}],ArmorDropChances:[0f,0f,0f,0f],HandDropChances:[0f,0f]}
+summon zombie 620 66 138 {Tags:["arena_mob","arena_new"],PersistenceRequired:1b,IsBaby:1b}
+summon zombie 624 66 138 {Tags:["arena_mob","arena_new"],PersistenceRequired:1b,IsBaby:1b}
+summon zombie 620 66 142 {Tags:["arena_mob","arena_new"],PersistenceRequired:1b,IsBaby:1b}
+summon zombie 624 66 142 {Tags:["arena_mob","arena_new"],PersistenceRequired:1b,IsBaby:1b}
