@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:deepslate_bricks",
+    "minecraft:deepslate_tiles",
+    "minecraft:glass",
+    "minecraft:polished_blackstone_bricks"
+  ]
+}

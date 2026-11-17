@@ -78,6 +78,25 @@ sign("633 68 117", "west", [E, B("THE WITHER", "light_purple"), N("good luck..."
 sign("620 67 116", "south", [E, B("JOIN FIGHT", "green"), N("jump in"), E], 50)
 sign("624 67 116", "south", [E, B("END FIGHT", "red"), N("stops everything"), E], 99)
 sign("622 68 116", "south", [N("To leave the", "white"), N("arena: crouch on", "white"), B("the BEDROCK", "aqua"), N("in the corner", "white")])
+# North wall, left of the door: Cataclysm bosses (kid mode = half health, see gen_arena.py KID_MODE)
+sign("615 69 116", "south", [E, B("CATACLYSM", "dark_red"), N("kid mode: 1/2 HP"), E])
+sign("613 68 116", "south", [E, B("Ignis", "gold"), N("flame knight"), E], 10)
+sign("615 68 116", "south", [B("Netherite", "red"), B("Monstrosity", "red"), N("lava giant"), E], 11)
+sign("617 68 116", "south", [E, B("The Harbinger", "dark_purple"), N("missile robot"), E], 12)
+sign("613 67 116", "south", [E, B("Ender Guardian", "dark_purple"), N("End knight"), E], 13)
+sign("615 67 116", "south", [E, B("Maledictus", "aqua"), N("frost spirit"), E], 14)
+sign("617 67 116", "south", [B("Ancient", "gold"), B("Remnant", "gold"), N("sand titan"), E], 15)
+# North wall, right of the door: the gladiator mini-boss
+sign("628 69 116", "south", [E, B("MINI-BOSS", "gold"), N("kid mode: 1/2 HP"), E])
+sign("628 68 116", "south", [E, B("Kobolediator", "yellow"), N("the gladiator"), E], 16)
+# North wall, far right: difficulty buttons (gen_arena.py DIFFS). Line 3 of the header is rewritten
+# by the datapack to show the current setting.
+sign("631 69 116", "south", [E, B("DIFFICULTY", "gold"), B("now: Normal 1x", "yellow"), E])
+sign("630 68 116", "south", [E, B("Easy", "green"), N("1/2x"), E])
+sign("631 68 116", "south", [E, B("Normal", "yellow"), N("1x"), E])
+sign("632 68 116", "south", [E, B("Hard", "red"), N("1.75x"), E])
+for x in (630, 631, 632):
+    s(f"setblock {x} 67 116 minecraft:polished_blackstone_button[face=wall,facing=south]")
 
 checks = [
     "execute if block 622 65 134 minecraft:reinforced_deepslate",
@@ -97,6 +116,9 @@ checks = [
     "execute if block 611 68 117 minecraft:dark_oak_wall_sign",
     "execute if block 633 68 117 minecraft:dark_oak_wall_sign",
     "execute if block 624 67 116 minecraft:dark_oak_wall_sign",
+    "execute if block 613 68 116 minecraft:dark_oak_wall_sign",
+    "execute if block 617 67 116 minecraft:dark_oak_wall_sign",
+    "execute if block 628 68 116 minecraft:dark_oak_wall_sign",
     "execute if block 622 74 134 #minecraft:wither_immune",
     "execute if block 622 65 134 #minecraft:wither_immune",
     "execute if block 611 70 134 #minecraft:wither_immune",

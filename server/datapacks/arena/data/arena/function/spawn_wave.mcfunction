@@ -7,5 +7,14 @@ execute if score #type arena matches 1..6 run function arena:spawn_horde
 execute if score #type arena matches 7 run function arena:boss/zombie_king
 execute if score #type arena matches 8 run function arena:boss/ravager
 execute if score #type arena matches 9 run function arena:boss/wither
+execute if score #type arena matches 10 run function arena:boss/cm_ignis
+execute if score #type arena matches 11 run function arena:boss/cm_monstrosity
+execute if score #type arena matches 12 run function arena:boss/cm_harbinger
+execute if score #type arena matches 13 run function arena:boss/cm_ender_guardian
+execute if score #type arena matches 14 run function arena:boss/cm_maledictus
+execute if score #type arena matches 15 run function arena:boss/cm_remnant
+execute if score #type arena matches 16 run function arena:boss/cm_kobolediator
+execute as @e[tag=kid_new] run function arena:kidhp
+execute as @e[tag=diff_new] run function arena:diffscale
 spreadplayers 622 137 1 6 under 75 false @e[tag=arena_new]
 tag @e[tag=arena_new] remove arena_new
